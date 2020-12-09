@@ -75,7 +75,7 @@ def search(search_word):
                     else:
                         continue
                 else:
-                    q = f"SELECT DISTINCT * FROM {name_table} WHERE {name_column[0]}='{search_word}' "
+                    q = f"SELECT DISTINCT * FROM {name_table} WHERE {name_column[0]} LIKE '%{search_word}%' "
                 cursor.execute(q)
                 row = cursor.fetchone()
                 if row is not None:
@@ -177,10 +177,8 @@ def generate_items(connection, number, table_name):
 
         query = f" SELECT generate_series(1,{number}) AS id, md5    (random()::text) AS full_name, " \
                 f" 'male' AS gender, floor(random() * 80)::int AS age;"
-        print(query)
         cursor.execute(query)
         items = cursor.fetchall()
-        print(items)
     except (Exception, psycopg2.Error) as error:
         print("Error while INSERTING data to PostgreSQL", error)
         items = None
