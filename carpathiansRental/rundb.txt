@@ -1,0 +1,20 @@
+mongod --shardsvr --replSet "r0" --port 40000 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep
+mongod --shardsvr --replSet "r0" --port 40001 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep1
+mongod --shardsvr --replSet "r0" --port 40002 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep2
+
+mongod --shardsvr --replSet "r1" --port 40003 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep3
+mongod --shardsvr --replSet "r1" --port 40004 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep4
+mongod --shardsvr --replSet "r1" --port 40005 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep5
+
+mongod --configsvr --replSet configReplSet --port 41000 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep_config
+mongod --configsvr --replSet configReplSet --port 41001 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep_config1
+mongod --configsvr --replSet configReplSet --port 41002 --dbpath=/home/stilpert/programing/dataBases/carpathiansRental/dbs/dbrep_config2
+
+mongos  --configdb configReplSet/localhost:41000,localhost:41001,localhost:41002 --port 43000 --bind_ip localhost
+
+mongo --port 40000
+mongo --port 40003
+mongo --port 43000 --host localhost
+
+# 40000 - primary, 40001, 40002 - secondary
+# 40003 - primary, 40004, 40005 - secondary
